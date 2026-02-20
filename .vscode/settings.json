@@ -1,0 +1,5 @@
+{
+  "git.blame.editorDecoration.enabled": false,
+  "git.enabled": true,
+  "git.allowForcePush": true
+}
