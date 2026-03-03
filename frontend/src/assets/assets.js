@@ -88,11 +88,11 @@ export const menu_list = [
         menu_image: menu_1
     },
     {
-        menu_name: "Rolls",
+        menu_name: "Bánh cuốn",
         menu_image: menu_2
     },
     {
-        menu_name: "Deserts",
+        menu_name: "Món tráng miệng",
         menu_image: menu_3
     },
     {
@@ -100,251 +100,251 @@ export const menu_list = [
         menu_image: menu_4
     },
     {
-        menu_name: "Cake",
+        menu_name: "Bánh ngọt",
         menu_image: menu_5
     },
     {
-        menu_name: "Pure Veg",
+        menu_name: "Rau Nguyên Chất",
         menu_image: menu_6
     },
     {
-        menu_name: "Pasta",
+        menu_name: "mì ống",
         menu_image: menu_7
     },
     {
-        menu_name: "Noodles",
+        menu_name: "Mì",
         menu_image: menu_8
     }]
 
 export const food_list = [
     {
         _id: "1",
-        name: "Greek salad",
+        name: "Salad Hy Lạp",
         image: food_1,
         price: 12,
-        description: "Food provides essential nutrients for overall health and well-being",
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
         category: "Salad"
     },
     {
         _id: "2",
-        name: "Veg salad",
+        name: "Gỏi chay",
         image: food_2,
         price: 18,
-        description: "Food provides essential nutrients for overall health and well-being",
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
         category: "Salad"
     }, {
         _id: "3",
-        name: "Clover Salad",
+        name: "Salad cỏ ba lá",
         image: food_3,
         price: 16,
-        description: "Food provides essential nutrients for overall health and well-being",
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
         category: "Salad"
     }, {
         _id: "4",
-        name: "Chicken Salad",
+        name: "salad gà",
         image: food_4,
         price: 24,
-        description: "Food provides essential nutrients for overall health and well-being",
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
         category: "Salad"
     }, {
         _id: "5",
-        name: "Lasagna Rolls",
+        name: "Lasagna cuộn",
         image: food_5,
         price: 14,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Rolls"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Bánh cuốn"
     }, {
         _id: "6",
-        name: "Peri Peri Rolls",
+        name: "Bánh mì Peri Peri",
         image: food_6,
         price: 12,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Rolls"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Bánh cuốn"
     }, {
         _id: "7",
-        name: "Chicken Rolls",
+        name: "Chả gà",
         image: food_7,
         price: 20,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Rolls"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Bánh cuốn"
     }, {
         _id: "8",
-        name: "Veg Rolls",
+        name: "Bánh cuốn chay",
         image: food_8,
         price: 15,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Rolls"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Bánh cuốn"
     }, {
         _id: "9",
-        name: "Ripple Ice Cream",
+        name: "Kem gợn sóng",
         image: food_9,
         price: 14,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Deserts"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Món tráng miệng"
     }, {
         _id: "10",
-        name: "Fruit Ice Cream",
+        name: "Kem trái cây",
         image: food_10,
         price: 22,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Deserts"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Món tráng miệng"
     }, {
         _id: "11",
-        name: "Jar Ice Cream",
+        name: "Kem lọ",
         image: food_11,
         price: 10,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Deserts"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Món tráng miệng"
     }, {
         _id: "12",
-        name: "Vanilla Ice Cream",
+        name: "Kem Vani",
         image: food_12,
         price: 12,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Deserts"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Món tráng miệng"
     },
     {
         _id: "13",
-        name: "Chicken Sandwich",
+        name: "Sandwich gà",
         image: food_13,
         price: 12,
-        description: "Food provides essential nutrients for overall health and well-being",
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
         category: "Sandwich"
     },
     {
         _id: "14",
-        name: "Vegan Sandwich",
+        name: "bánh mì thuần chay",
         image: food_14,
         price: 18,
-        description: "Food provides essential nutrients for overall health and well-being",
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
         category: "Sandwich"
     }, {
         _id: "15",
-        name: "Grilled Sandwich",
+        name: "Sandwich nướng",
         image: food_15,
         price: 16,
-        description: "Food provides essential nutrients for overall health and well-being",
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
         category: "Sandwich"
     }, {
         _id: "16",
-        name: "Bread Sandwich",
+        name: "Bánh mỳ Sandwich",
         image: food_16,
         price: 24,
-        description: "Food provides essential nutrients for overall health and well-being",
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
         category: "Sandwich"
     }, {
         _id: "17",
-        name: "Cup Cake",
+        name: "Bánh cốc",
         image: food_17,
         price: 14,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Cake"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Bánh ngọt"
     }, {
         _id: "18",
-        name: "Vegan Cake",
+        name: "Bánh chay",
         image: food_18,
         price: 12,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Cake"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Bánh ngọt"
     }, {
         _id: "19",
-        name: "Butterscotch Cake",
+        name: "bánh bơ",
         image: food_19,
         price: 20,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Cake"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Bánh ngọt"
     }, {
         _id: "20",
-        name: "Sliced Cake",
+        name: "Bánh cắt lát",
         image: food_20,
         price: 15,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Cake"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Bánh ngọt"
     }, {
         _id: "21",
-        name: "Garlic Mushroom ",
+        name: "Nấm Tỏi",
         image: food_21,
         price: 14,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Pure Veg"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Rau Nguyên Chất"
     }, {
         _id: "22",
-        name: "Fried Cauliflower",
+        name: "Súp lơ chiên",
         image: food_22,
         price: 22,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Pure Veg"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Rau Nguyên Chất"
     }, {
         _id: "23",
-        name: "Mix Veg Pulao",
+        name: "Cơm thập cẩm rau củ",
         image: food_23,
         price: 10,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Pure Veg"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Rau Nguyên Chất"
     }, {
         _id: "24",
-        name: "Rice Zucchini",
+        name: "Cơm bí ngòi",
         image: food_24,
         price: 12,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Pure Veg"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Rau Nguyên Chất"
     },
     {
         _id: "25",
-        name: "Cheese Pasta",
+        name: "mì phô mai",
         image: food_25,
         price: 12,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Pasta"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "mì ống"
     },
     {
         _id: "26",
-        name: "Tomato Pasta",
+        name: "Pasta cà chua",
         image: food_26,
         price: 18,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Pasta"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "mì ống"
     }, {
         _id: "27",
-        name: "Creamy Pasta",
+        name: "mì ống kem",
         image: food_27,
         price: 16,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Pasta"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "mì ống"
     }, {
         _id: "28",
-        name: "Chicken Pasta",
+        name: "mì gà",
         image: food_28,
         price: 24,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Pasta"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "mì ống"
     }, {
         _id: "29",
-        name: "Buttter Noodles",
+        name: "mì bơ",
         image: food_29,
         price: 14,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Noodles"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Mì"
     }, {
         _id: "30",
-        name: "Veg Noodles",
+        name: "Mì rau củ",
         image: food_30,
         price: 12,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Noodles"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Mì"
     }, {
         _id: "31",
-        name: "Somen Noodles",
+        name: "Mì Somen",
         image: food_31,
         price: 20,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Noodles"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Mì"
     }, {
         _id: "32",
-        name: "Cooked Noodles",
+        name: "Mì nấu chín",
         image: food_32,
         price: 15,
-        description: "Food provides essential nutrients for overall health and well-being",
-        category: "Noodles"
+        description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
+        category: "Mì"
     }
 ]
