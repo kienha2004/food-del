@@ -24,3 +24,15 @@
     display:flex;
     gap:30px;
 }
+.add-product-price select,.add-category-price input{
+    max-width:120px;
+    padding:10px;
+}
+.add-btn{
+    max-width: 120px;
+    border:none;
+    padding:10px;
+    background-color: black;
+    color:white;
+    cursor: pointer;
+}

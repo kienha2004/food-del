@@ -108,7 +108,7 @@ export const menu_list = [
         menu_image: menu_6
     },
     {
-        menu_name: "mì ống",
+        menu_name: "Mì ống",
         menu_image: menu_7
     },
     {
@@ -295,7 +295,7 @@ export const food_list = [
         image: food_25,
         price: 12,
         description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
-        category: "mì ống"
+        category: "Mì ống"
     },
     {
         _id: "26",
@@ -303,21 +303,21 @@ export const food_list = [
         image: food_26,
         price: 18,
         description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
-        category: "mì ống"
+        category: "Mì ống"
     }, {
         _id: "27",
         name: "mì ống kem",
         image: food_27,
         price: 16,
         description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
-        category: "mì ống"
+        category: "Mì ống"
     }, {
         _id: "28",
         name: "mì gà",
         image: food_28,
         price: 24,
         description: "Thực phẩm cung cấp các chất dinh dưỡng thiết yếu cho sức khỏe và thể chất toàn diện.",
-        category: "mì ống"
+        category: "Mì ống"
     }, {
         _id: "29",
         name: "mì bơ",
