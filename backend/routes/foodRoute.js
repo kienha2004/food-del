@@ -1,36 +1,28 @@
-import express from "express"; 
-import multer from 'multer'; 
-import { addFood, listFood, removeFood } from "../controllers/foodController.js"; 
-import path from 'path'; // Import path
+import express from "express";
+import { addFood,listFood,removeFood } from "../controllers/foodController.js";
+import multer from "multer";
+import path from "path";
 
 const foodRouter = express.Router();
 
-// Set up multer storage
+// Resolve the correct path for the uploads directory
+const uploadsDir = path.join(process.cwd(), 'uploads'); // Assuming 'uploads' is in your current working directory
+
+// Multer storage configuration
 const storage = multer.diskStorage({
-    destination: "uploads", // Ensure this directory exists
+    destination: (req, file, cb) => {
+        cb(null, uploadsDir); // Use the resolved uploads directory
+    },
     filename: (req, file, cb) => {
-        cb(null, `${Date.now()}_${file.originalname}`);
+        const uniqueSuffix = `${Date.now()}-${file.originalname}`;
+        cb(null, uniqueSuffix); 
     }
 });
 
-// Set up multer upload with fileFilter
-const upload = multer({ 
-    storage,
-    fileFilter: (req, file, cb) => {
-        const filetypes = /jpeg|jpg|png|gif/; // Allowed formats
-        const mimetype = filetypes.test(file.mimetype);
-        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+const upload = multer({ storage: storage });
 
-        if (mimetype && extname) {
-            return cb(null, true);
-        }
-        cb(new Error("Error: File upload invalid."));
-    }
-});
-
-// Route for adding food
 foodRouter.post("/add", upload.single("image"), addFood);
-foodRouter.get("/list", listFood);
-foodRouter.delete("/remove", removeFood);
+foodRouter.get("/list",listFood);
+foodRouter.post("/remove",removeFood);
 
 export default foodRouter;

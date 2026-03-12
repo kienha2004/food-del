@@ -1,62 +1,72 @@
-import fs from 'fs';
-import foodModel from '../models/foodModel.js'; // Ensure this import is correct
+import { promises as fs } from "fs"; // Ensures the fs module is imported correctly
+import foodModel from "../models/foodModel.js";
 
 // Function to add food
-export const addFood = async (req, res) => {
-    console.log('Headers:', req.headers);
-    console.log('Request body:', req.body);
-    console.log('Uploaded file:', req.file); // This is where you expect the file information
+const addFood = async (req, res) => {
+    console.log("Request Body:", req.body);
+    console.log("Uploaded File:", req.file);
 
+    // Check if a file has been uploaded
     if (!req.file) {
-        return res.status(400).json({ success: false, message: "No file uploaded" });
+        return res.status(400).json({ success: false, message: "No file uploaded." });
     }
 
-    const foodItem = {
-        name: req.body.name,
-        description: req.body.description,
-        price: req.body.price,
-        category: req.body.category,
-        image: req.file.filename,
-    };
+    const { name, description, price, category } = req.body;
 
-    // Save foodItem to the database (add your database logic here)
+    // Validate required fields
+    if (!name || !description || !price || !category) {
+        return res.status(400).json({ success: false, message: "All fields are required." });
+    }
 
-    res.status(200).json({ success: true, message: "Food item added successfully", foodItem });
+    const image_filename = req.file.filename;
+
+    // Create a new food item
+    const food = new foodModel({
+        name,
+        description,
+        price,
+        category,
+        image: image_filename,
+    });
+
+    try {
+        // Save the food item to the database
+        await food.save();
+        return res.json({ success: true, message: "Food Added" });
+    } catch (error) {
+        console.error("Error saving food:", error);
+        return res.status(500).json({ success: false, message: "Error saving food" });
+    }
 };
 
-// Function to list foods
-export const listFood = async (req, res) => {
+// Function to list all food items
+const listFood = async (req, res) => {
     try {
-        const foods = await foodModel.find({});  // Ensure foodModel is properly defined
-        res.json({ success: true, data: foods });
+        const foods = await foodModel.find({});
+        return res.json({ success: true, data: foods });
     } catch (error) {
-        console.error(error);  // Use the correct variable
-        res.status(500).json({ success: false, message: "Error retrieving food items" });
+        console.error("Error retrieving foods:", error);
+        return res.status(500).json({ success: false, message: "Error retrieving foods" });
     }
 };
 
 // Function to remove food
-export const removeFood = async (req, res) => {
+const removeFood = async (req, res) => {
     try {
         const food = await foodModel.findById(req.body.id);
-        
+
         if (!food) {
-            return res.status(404).json({ success: false, message: "Food not found" });
+            return res.status(404).json({ success: false, message: "Food item not found." });
         }
 
-        // Use backticks for string interpolation
-        fs.unlink(`uploads/${food.image}`, (err) => {
-            if (err) {
-                console.error("Error deleting file:", err);
-                return res.status(500).json({ success: false, message: "Error deleting image file" });
-            }
-        });
-
+        await fs.unlink(`uploads/${food.image}`);
         await foodModel.findByIdAndDelete(req.body.id);
-        res.json({ success: true, message: "Food removed successfully" });
 
+        res.json({ success: true, message: "Food removed" });
     } catch (error) {
-        console.error("Error occurred:", error);
-        res.status(500).json({ success: false, message: "An error occurred while removing the food" });
+        console.error("Error removing food:", error);
+        res.status(500).json({ success: false, message: "Error removing food" });
     }
 };
+
+export { addFood, listFood, removeFood };
