@@ -6,8 +6,8 @@ import LoginPopup from '../LoginPopup/LoginPopup';
 import { StoreContext } from '../../context/StoreContext';
 import React, { useState, useContext } from 'react';
 const Navbar = ({ setShowLogin }) => { 
-  const [menu, setMenu] = useState("menu");
-  const{getTotalCartAmount}= useContext(StoreContext);
+  const [menu, setMenu] = useState("home");
+  const{getTotalCartAmount,token,setToken}= useContext(StoreContext);
 
   return (
     <div className='navbar'>
@@ -24,7 +24,17 @@ const Navbar = ({ setShowLogin }) => {
                 <Link to='/cart'> <img src={assets.basket_icon} alt="Basket" /></Link>
                 <div className={getTotalCartAmount()===0?"":"dot"}></div>
             </div>
-            <button onClick={()=> setShowLogin(true)}>Sign In</button>
+            {!token?<button onClick={()=> setShowLogin(true)}>Sign In</button>
+            :<div className='navbar-profile'>
+                <img src ={assets.profile_icon} alt=""/>
+                <ul className="nav-profile-dropdown"> 
+                 <li> <img src ={assets.bag_icon} alt=""/><p>Orders</p></li>
+                 <hr />
+                 <li> <img src ={assets.logout_icon} alt=""/><p>LogOut</p></li>
+                </ul>
+                            
+                </div>}
+            
         </div>
     </div>
   );
