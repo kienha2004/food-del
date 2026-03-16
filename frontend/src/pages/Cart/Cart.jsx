@@ -3,10 +3,10 @@ import "./Cart.css";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
 
-
 const Cart = () => {
-  const { cartItems, food_list, removeFromCart, getTotalCartAmount } = useContext(StoreContext);
+  const { cartItems, food_list, removeFromCart, getTotalCartAmount,url } = useContext(StoreContext);
   const navigate = useNavigate();
+
   return (
     <div className="cart">
       <div className="cart-items">
@@ -20,54 +20,56 @@ const Cart = () => {
         </div>
         <br />
         <hr />
+
         {food_list.map((item) => {
-          if (cartItems[item._id] > 0) {
+          const itemQuantity = cartItems[item._id];
+          if (itemQuantity > 0) {
             return (
-              <div>
-                <div key={item._id} className="cart-items-item">
-                <img src = {item.image} alt=""/>
-                <p>{item.name}</p>
-                <p>${item.price}</p>
-                <p>{cartItems[item._id]}</p>
-                <p>${item.price * cartItems[item._id]}</p>
-                <p onClick={() => removeFromCart(item._id)} className='cross'>x</p>
-              </div>
-              <hr/>
+              <div key={item._id}>
+                <div className="cart-items-title cart-items-item">
+                  <img src={`${url}/images/${item.image}`} alt={item.name} />
+                  <p>{item.name}</p>
+                  <p>${item.price.toFixed(2)}</p>
+                  <p>{itemQuantity}</p>
+                  <p>${(item.price * itemQuantity).toFixed(2)}</p>
+                  <p onClick={() => removeFromCart(item._id)} className='cross'>x</p>
                 </div>
-              
+                <hr />
+              </div>
             );
           }
           return null;
         })}
       </div>
+
       <div className="cart-bottom">
         <div className="cart-total">
           <h2>Tổng số giỏ hàng:</h2>
           <div>
             <div className="cart-total-details">
               <p>Tổng phụ</p>
-              <p>{getTotalCartAmount()}</p>
-            </div>
-            <hr/>
-            <div className="cart-total-details">
-<p>Phí giao hàng</p>
-<p>${getTotalCartAmount()===0?0:2}</p>
+              <p>${getTotalCartAmount().toFixed(2)}</p>
             </div>
             <hr />
             <div className="cart-total-details">
-<p>Tổng số</p>
-<p>{getTotalCartAmount()===0?0:getTotalCartAmount()+2}</p>
+              <p>Phí giao hàng</p>
+              <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
             </div>
-            
+            <hr />
+            <div className="cart-total-details">
+              <p>Tổng số</p>
+              <p>${getTotalCartAmount() === 0 ? 0 : (getTotalCartAmount() + 2).toFixed(2)}</p>
+            </div>
           </div>
-          <button onClick={()=> navigate('/order')}>Tiến hành thanh toán</button>
+          <button onClick={() => navigate('/order')}>Tiến hành thanh toán</button>
         </div>
+
         <div className="cart-promocode">
           <div>
             <p>Nếu bạn có mã khuyến mãi, hãy nhập mã đó vào đây.</p>
             <div className='cart-promocode-input'>
-                <input type="text" placeholder='Mã khuyến mãi' />
-                <button>Áp dụng</button>
+              <input type="text" placeholder='Mã khuyến mãi' />
+              <button>Áp dụng</button>
             </div>
           </div>
         </div>

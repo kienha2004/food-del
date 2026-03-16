@@ -106,6 +106,18 @@ navbar li{
     list-style: none; 
 
 }
+.nav-profile-dropdown li{
+    display:flex ;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+.nav-profile-dropdown img {
+    width:20px;
+}
+.nav-profile-dropdown li:hover{
+   color: tomato; 
+}
 .nav-profile-dropdown{
     position: absolute;
     display:none;
