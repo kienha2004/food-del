@@ -65,5 +65,30 @@ const placeOrder = async (req, res) => {
     return res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
+const verifyOrder = async(req,res)=>{
+const {orderId,success}= req.body;
+try{
+  if(success=="true"){
+    await orderModel.findByIdAndUpdate(orderId,{payment:true});
+    res.json({success:true,message:" Đã trả"})
+  }
+  else {
+    await orderModel.findByIdAndUpdate(orderId);
+    res.json({success:false,message:"không thể trả"})
+  }
+}  catch(error){
+  console.log(error);
+  res.json({success:false,message:"error"})
+}
+}
+const userOrders =async (req,res)=>{
+try {
+  const orders = await orderModel.find({userId:req.body.userId});
+  res.json({sucess:true,data:orders})
+} catch (error) {
+  console.log(error);
+  res.json({success:false,message:"error"})
+}
+}
 
-export { placeOrder };
+export { placeOrder,verifyOrder,userOrders };
