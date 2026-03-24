@@ -8,13 +8,15 @@ const placeOrder = async (req, res) => {
   const frontend_url = "http://localhost:5173";
 
   try {
-    // basic validation
-    const { userId, items, amount, address } = req.body;
+    // Prefer authenticated userId from middleware but fallback to body
+    const userId = req.userId || req.body.userId;
+    const { items, amount, address } = req.body;
+
     if (!userId || !Array.isArray(items) || items.length === 0 || !amount) {
       return res.status(400).json({ success: false, message: "Invalid payload" });
     }
 
-    // create order record (optional: you may prefer to create after payment confirmation)
+    // create order record (optional: create after payment confirmation if desired)
     const newOrder = new orderModel({
       userId,
       items,
@@ -23,7 +25,7 @@ const placeOrder = async (req, res) => {
     });
     await newOrder.save();
 
-    // clear user's cartData (use update, not delete)
+    // clear user's cartData (use update)
     await userModel.findByIdAndUpdate(userId, { cartData: {} });
 
     // prepare line items for Stripe
@@ -33,8 +35,7 @@ const placeOrder = async (req, res) => {
         product_data: {
           name: item.name,
         },
-        // amount in paise (integer). Remove any unintended multiplier.
-        unit_amount: Math.round(Number(item.price) * 100),
+        unit_amount: Math.round(Number(item.price) * 100), // paise
       },
       quantity: item.quantity || 1,
     }));
@@ -65,30 +66,66 @@ const placeOrder = async (req, res) => {
     return res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
-const verifyOrder = async(req,res)=>{
-const {orderId,success}= req.body;
-try{
-  if(success=="true"){
-    await orderModel.findByIdAndUpdate(orderId,{payment:true});
-    res.json({success:true,message:" Đã trả"})
+
+const verifyOrder = async (req, res) => {
+  // Depending on how you call verify (query vs body), adapt below.
+  // If frontend redirects to /verify?success=true&orderId=..., use req.query.
+  const { orderId } = req.body || {};
+  const success = (req.body && req.body.success) || (req.query && req.query.success);
+
+  try {
+    if (success === "true" || success === true) {
+      await orderModel.findByIdAndUpdate(orderId, { payment: true });
+      return res.json({ success: true, message: "Đã trả" });
+    } else {
+      // If you want to mark or leave unchanged, use the appropriate update.
+      await orderModel.findByIdAndUpdate(orderId, { payment: false });
+      return res.json({ success: false, message: "Không thể trả" });
+    }
+  } catch (error) {
+    console.error("verifyOrder error:", error);
+    return res.status(500).json({ success: false, message: "error" });
   }
-  else {
-    await orderModel.findByIdAndUpdate(orderId);
-    res.json({success:false,message:"không thể trả"})
+};
+
+const userOrders = async (req, res) => {
+  try {
+    // Prefer req.userId set by auth middleware. Fall back to req.user?.id or req.body.userId.
+    const userId =
+      req.userId ||
+      (req.user && (req.user.id || req.user.userId)) ||
+      (req.body && req.body.userId);
+
+    if (!userId) {
+      return res.status(401).json({ success: false, message: "Unauthorized: missing user id" });
+    }
+
+    const orders = await orderModel.find({ userId });
+    return res.json({ success: true, data: orders });
+  } catch (error) {
+    console.error("userOrders error:", error);
+    return res.status(500).json({ success: false, message: "Internal server error" });
   }
-}  catch(error){
+};
+const listOrders = async(req,res)=>{
+try {
+  const orders = await orderModel.find({});
+  res.json({success:true,data:orders})
+  
+} catch (error) {
   console.log(error);
   res.json({success:false,message:"error"})
+  
 }
 }
-const userOrders =async (req,res)=>{
+const updateStatus = async(req,res)=>{
 try {
-  const orders = await orderModel.find({userId:req.body.userId});
-  res.json({sucess:true,data:orders})
+  await orderModel.findByIdAndUpdate(req.body.orderId,{status:req.body.status});
+  res.json({success:true,message:"Đã cập nhật trạng thái"})
 } catch (error) {
   console.log(error);
   res.json({success:false,message:"error"})
 }
 }
 
-export { placeOrder,verifyOrder,userOrders };
+export { placeOrder, verifyOrder, userOrders,listOrders,updateStatus };
