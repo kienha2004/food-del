@@ -7,6 +7,7 @@ const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
+  const [discountData, setDiscountData] = useState(null);
 
   const url = "http://localhost:4000";
 
@@ -56,6 +57,42 @@ const StoreContextProvider = (props) => {
       }
     }
     return totalAmount;
+  };
+
+  const applyPromotion = async (code) => {
+    try {
+      const response = await axios.post(url + "/api/promotion/validate", { code });
+      if (response.data.success) {
+        setDiscountData(response.data.data);
+        return { success: true, message: "Áp dụng mã thành công!" };
+      } else {
+        setDiscountData(null);
+        return { success: false, message: response.data.message };
+      }
+    } catch (error) {
+      return { success: false, message: "Lỗi kết nối khi kiểm tra mã" };
+    }
+  };
+
+  const getDiscountAmount = () => {
+    if (!discountData) return 0;
+    const totalAmount = getTotalCartAmount();
+    // Không đạt đơn tối thiểu
+    if (totalAmount < discountData.minOrderValue) return 0; 
+    
+    let discount = 0;
+    if (discountData.discountType === "percentage") {
+      discount = (totalAmount * discountData.discountValue) / 100;
+    } else {
+      discount = discountData.discountValue;
+    }
+    
+    // Nếu có giới hạn số tiền giảm tối đa
+    if (discountData.maxDiscountAmount && discount > discountData.maxDiscountAmount) {
+      discount = discountData.maxDiscountAmount;
+    }
+    
+    return discount;
   };
 
   const fetchFoodList = async () => {
@@ -112,6 +149,9 @@ const StoreContextProvider = (props) => {
     url,
     token,
     setToken,
+    discountData,
+    applyPromotion,
+    getDiscountAmount,
   };
 
   return <StoreContext.Provider value={contextValue}>{props.children}</StoreContext.Provider>;

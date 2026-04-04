@@ -2,10 +2,22 @@ import React, { useContext } from "react";
 import "./Cart.css";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Cart = () => {
-  const { cartItems, food_list, removeFromCart, getTotalCartAmount,url } = useContext(StoreContext);
+  const { cartItems, food_list, removeFromCart, getTotalCartAmount, url, applyPromotion, getDiscountAmount, discountData } = useContext(StoreContext);
   const navigate = useNavigate();
+  const [promoCode, setPromoCode] = useState("");
+
+  const handleApplyPromo = async () => {
+    if (!promoCode) return;
+    const res = await applyPromotion(promoCode);
+    if(res.success) {
+        alert("Áp dụng thành công Voucher: " + promoCode); // Có thể thay bằng toast
+    } else {
+        alert("Lỗi: " + res.message); 
+    }
+  };
 
   return (
     <div className="cart">
@@ -56,9 +68,18 @@ const Cart = () => {
               <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
             </div>
             <hr />
+            {discountData && (
+              <>
+                <div className="cart-total-details">
+                  <p>Giảm giá ({discountData.code})</p>
+                  <p className="text-success" style={{color: 'green'}}>- ${getDiscountAmount().toFixed(2)}</p>
+                </div>
+                <hr />
+              </>
+            )}
             <div className="cart-total-details">
               <p>Tổng số</p>
-              <p>${getTotalCartAmount() === 0 ? 0 : (getTotalCartAmount() + 2).toFixed(2)}</p>
+              <p>${getTotalCartAmount() === 0 ? 0 : (getTotalCartAmount() + 2 - getDiscountAmount()).toFixed(2)}</p>
             </div>
           </div>
           <button onClick={() => navigate('/order')}>Tiến hành thanh toán</button>
@@ -68,8 +89,8 @@ const Cart = () => {
           <div>
             <p>Nếu bạn có mã khuyến mãi, hãy nhập mã đó vào đây.</p>
             <div className='cart-promocode-input'>
-              <input type="text" placeholder='Mã khuyến mãi' />
-              <button>Áp dụng</button>
+              <input type="text" placeholder='Nhập mã ở đây' value={promoCode} onChange={(e) => setPromoCode(e.target.value)} />
+              <button onClick={handleApplyPromo}>Áp dụng</button>
             </div>
           </div>
         </div>

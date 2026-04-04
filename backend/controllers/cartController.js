@@ -3,6 +3,9 @@ import userModel from "../models/userModel.js"
 const addToCart = async (req,res)=>{
 try{
 let userData = await userModel.findById(req.body.userId);
+if (!userData) {
+    return res.json({success: false, message: "Người dùng không tồn tại hoặc phiên đăng nhập đã cũ!"});
+}
 let cartData = await userData.cartData;
 if(!cartData[req.body.itemId])
 {
@@ -20,6 +23,9 @@ res.json({success:false,message:"error"})
 const removeFromCart = async (req,res)=>{
 try {
     let userData = await userModel.findById(req.body.userId);
+    if (!userData) {
+        return res.json({success: false, message: "Người dùng không tồn tại!"});
+    }
     let cartData = await userData.cartData;
 if(cartData[req.body.itemId]>0){
     cartData[req.body.itemId] -= 1;
@@ -36,6 +42,9 @@ res.json({success:true,message:"Đã xóa khỏi giỏ hàng"})
 const getCart = async (req,res )=> {
 try {
     let userData = await userModel.findById(req.body.userId)
+    if (!userData) {
+        return res.json({success: false, message: "Người dùng không tồn tại!"});
+    }
     let cartData = await userData.cartData;
     res.json({success:true,cartData})
 } catch (error) {

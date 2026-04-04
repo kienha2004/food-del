@@ -1,0 +1,17 @@
+.add-driver {
+    width: 70%;
+    margin-left: 5vw;
+    margin-top: 50px;
+    color: #686868;
+    font-size: 16px;
+}
+.add-driver form {
+    gap: 20px;
+}
+.add-driver .add-category-price {
+    display: flex;
+    gap: 30px;
+}
+.add-driver input, .add-driver select {
+    padding: 10px;
+}

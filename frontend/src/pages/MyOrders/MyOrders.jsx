@@ -64,8 +64,17 @@ const MyOrders = () => {
                 <p className="order-count">Items: {Array.isArray(order.items) ? order.items.length : 0}</p>
                 <p className="order-status">
                   <span style={{ color: '#4caf50', marginRight: 6 }}> &#x25cf;</span>
-                  <b>{status}</b>
+                  <b>{status === 'Out for delivery' ? 'Đang giao hàng' : status}</b>
                 </p>
+
+                {status === 'Out for delivery' && (
+                  <div className="driver-info" style={{marginTop: '10px', fontSize: '13px', color: '#555', backgroundColor: '#e8f5e9', padding: '10px', borderRadius: '5px', border: '1px solid #c8e6c9'}}>
+                    <b style={{color: '#2e7d32'}}>🛵 Nhận diện Shipper:</b><br/>
+                    <b>Tên:</b> Nguyễn Văn A <br/>
+                    <b>SĐT:</b> 0909123456 <br/>
+                    <b>Xe:</b> Honda Wave (59A1-12345)
+                  </div>
+                )}
 
                 <button onClick={fetchOrders} className="track-btn">Theo dõi đơn hàng</button>
               </div>

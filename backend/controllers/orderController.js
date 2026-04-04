@@ -8,7 +8,7 @@ const placeOrder = async (req, res) => {
   const frontend_url = "http://localhost:5173";
 
   try {
-    // Prefer authenticated userId from middleware but fallback to body
+
     const userId = req.userId || req.body.userId;
     const { items, amount, address } = req.body;
 
@@ -16,7 +16,7 @@ const placeOrder = async (req, res) => {
       return res.status(400).json({ success: false, message: "Invalid payload" });
     }
 
-    // create order record (optional: create after payment confirmation if desired)
+
     const newOrder = new orderModel({
       userId,
       items,
@@ -25,10 +25,10 @@ const placeOrder = async (req, res) => {
     });
     await newOrder.save();
 
-    // clear user's cartData (use update)
+
     await userModel.findByIdAndUpdate(userId, { cartData: {} });
 
-    // prepare line items for Stripe
+
     const line_items = items.map((item) => ({
       price_data: {
         currency: "inr",
@@ -40,7 +40,7 @@ const placeOrder = async (req, res) => {
       quantity: item.quantity || 1,
     }));
 
-    // add shipping fee (example: ₹20 -> 2000 paise)
+
     line_items.push({
       price_data: {
         currency: "inr",
@@ -68,8 +68,7 @@ const placeOrder = async (req, res) => {
 };
 
 const verifyOrder = async (req, res) => {
-  // Depending on how you call verify (query vs body), adapt below.
-  // If frontend redirects to /verify?success=true&orderId=..., use req.query.
+
   const { orderId } = req.body || {};
   const success = (req.body && req.body.success) || (req.query && req.query.success);
 
@@ -78,7 +77,7 @@ const verifyOrder = async (req, res) => {
       await orderModel.findByIdAndUpdate(orderId, { payment: true });
       return res.json({ success: true, message: "Đã trả" });
     } else {
-      // If you want to mark or leave unchanged, use the appropriate update.
+
       await orderModel.findByIdAndUpdate(orderId, { payment: false });
       return res.json({ success: false, message: "Không thể trả" });
     }
@@ -90,7 +89,7 @@ const verifyOrder = async (req, res) => {
 
 const userOrders = async (req, res) => {
   try {
-    // Prefer req.userId set by auth middleware. Fall back to req.user?.id or req.body.userId.
+
     const userId =
       req.userId ||
       (req.user && (req.user.id || req.user.userId)) ||
@@ -107,25 +106,25 @@ const userOrders = async (req, res) => {
     return res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
-const listOrders = async(req,res)=>{
-try {
-  const orders = await orderModel.find({});
-  res.json({success:true,data:orders})
-  
-} catch (error) {
-  console.log(error);
-  res.json({success:false,message:"error"})
-  
+const listOrders = async (req, res) => {
+  try {
+    const orders = await orderModel.find({});
+    res.json({ success: true, data: orders })
+
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "error" })
+
+  }
 }
-}
-const updateStatus = async(req,res)=>{
-try {
-  await orderModel.findByIdAndUpdate(req.body.orderId,{status:req.body.status});
-  res.json({success:true,message:"Đã cập nhật trạng thái"})
-} catch (error) {
-  console.log(error);
-  res.json({success:false,message:"error"})
-}
+const updateStatus = async (req, res) => {
+  try {
+    await orderModel.findByIdAndUpdate(req.body.orderId, { status: req.body.status });
+    res.json({ success: true, message: "Đã cập nhật trạng thái" })
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "error" })
+  }
 }
 
-export { placeOrder, verifyOrder, userOrders,listOrders,updateStatus };
+export { placeOrder, verifyOrder, userOrders, listOrders, updateStatus };

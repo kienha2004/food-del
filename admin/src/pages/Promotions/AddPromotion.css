@@ -1,0 +1,17 @@
+.add-promotion {
+    width: 70%;
+    margin-left: 5vw;
+    margin-top: 50px;
+    color: #686868;
+    font-size: 16px;
+}
+.add-promotion form {
+    gap: 20px;
+}
+.add-promotion .add-category-price {
+    display: flex;
+    gap: 30px;
+}
+.add-promotion input, .add-promotion select, .add-promotion textarea {
+    padding: 10px;
+}
