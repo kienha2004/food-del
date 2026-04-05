@@ -3,10 +3,12 @@ import './FoodItem.css'
 import { assets } from '../../assets/assets'
 import { useState } from 'react'
 import { StoreContext } from '../../context/StoreContext'
+import ReviewSection from '../ReviewSection/ReviewSection'
 
 const FoodItem = ({id,name,price,description,image}) => {
 
 const { cartItems, addToCart, removeFromCart,url } = useContext(StoreContext);
+const [showReviews, setShowReviews] = useState(false);
 
 return (
 <div className='food-item'>
@@ -29,6 +31,13 @@ return (
 </div>
 <p className= "food-item-desc">{description}</p>
 <p className="food-item-price">${price}</p>
+<p 
+  style={{color: '#ff4c24', fontSize: '13px', cursor: 'pointer', marginTop: '10px'}} 
+  onClick={() => setShowReviews(!showReviews)}
+>
+  {showReviews ? "Ẩn đánh giá 🔺" : "Xem đánh giá 💬"}
+</p>
+{showReviews && <ReviewSection foodId={id} />}
 </div>
 </div>
 )

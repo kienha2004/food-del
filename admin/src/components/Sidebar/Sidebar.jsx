@@ -34,6 +34,10 @@ const Sidebar = () => {
                 <img src={assets.order_icon} alt="" />
                 <p>DS Tài xế</p>
             </NavLink>
+            <NavLink to='/transactions' className="sidebar-option">
+                <img src={assets.order_icon} alt="" />
+                <p>Thanh toán</p>
+            </NavLink>
         </div>
       
     </div>

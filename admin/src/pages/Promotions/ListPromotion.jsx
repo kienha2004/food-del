@@ -4,14 +4,11 @@ import { toast } from 'react-toastify';
 import './ListPromotion.css';
 
 const ListPromotion = ({ url }) => {
-    // Currently no strict get-all API in promotionController, let's assume one exists or we mock it.
-    // Wait, I only created addPromotion and validatePromotion in backend. 
-    // I need to add a getPromotions api to backend later. For now, empty or mock.
+
     const [list, setList] = useState([]);
 
     const fetchList = async () => {
-        // Will be implemented in backend next step. 
-        // For UI, we just render what we get.
+
         try {
             const response = await axios.get(`${url}/api/promotion/list`);
             if (response.data.success) {

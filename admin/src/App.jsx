@@ -9,6 +9,7 @@ import AddPromotion from './pages/Promotions/AddPromotion'
 import ListPromotion from './pages/Promotions/ListPromotion'
 import AddDriver from './pages/Drivers/AddDriver'
 import ListDrivers from './pages/Drivers/ListDrivers'
+import Transactions from './pages/Transactions/Transactions'
   import { ToastContainer } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css'
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
           <Route path ="/list-promotion" element={<ListPromotion url={url}/>}/>
           <Route path ="/add-driver" element={<AddDriver url={url}/>}/>
           <Route path ="/list-drivers" element={<ListDrivers url={url}/>}/>
+          <Route path ="/transactions" element={<Transactions url={url}/>}/>
         </Routes>
       </div>
     </div>
