@@ -15,12 +15,12 @@ const Transactions = ({ url }) => {
     const fetchTransactions = async () => {
         try {
             const response = await axios.get(`${url}/api/payment/list`);
-            if (response.data.success) {
+            if (response.data.success && response.data.data.length > 0) {
                 setTransactions(response.data.data);
             }
         } catch (error) {
-            // Uncomment when API is ready
-            // toast.error("Không thể tải dữ liệu thanh toán");
+            // Un-commented this
+            toast.error("Không thể tải dữ liệu thanh toán");
         }
     };
 

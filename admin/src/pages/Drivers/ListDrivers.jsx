@@ -1,13 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 import './ListDrivers.css';
 
-const ListDrivers = () => {
-    // UI Mockup. The backend list api is not implemented yet.
-    const [list] = useState([
-        { name: "Nguyễn Văn A", phone: "0909123456", vehicleType: "Motorbike", licensePlate: "59A1-12345", status: "Available", isOnline: true },
-        { name: "Trần Thị B", phone: "0888999777", vehicleType: "Car", licensePlate: "51G-98765", status: "Busy", isOnline: true }
-    ]);
+const ListDrivers = ({ url }) => {
+
+    const [list, setList] = useState([]);
+
+    const fetchDrivers = async () => {
+        try {
+            const res = await axios.get(`${url}/api/driver/list`);
+            if (res.data.success) {
+                setList(res.data.data);
+            }
+        } catch (error) {
+            toast.error("Không thể tải danh sách tài xế");
+        }
+    };
+
+    const removeDriver = async (driverId) => {
+        try {
+            const response = await axios.post(`${url}/api/driver/remove`, { id: driverId });
+            if (response.data.success) {
+                toast.success(response.data.message);
+                await fetchDrivers();
+            } else {
+                toast.error("Lỗi khi xóa tài xế");
+            }
+        } catch (error) {
+            toast.error("Không thể kết nối API xóa");
+        }
+    };
+
+    useEffect(() => {
+        fetchDrivers();
+    }, []);
 
     return (
         <div className="list add flex-col">
@@ -27,8 +54,8 @@ const ListDrivers = () => {
                         <p>{item.phone}</p>
                         <p>{item.vehicleType}</p>
                         <p>{item.licensePlate}</p>
-                        <p style={{color: item.status === 'Available' ? 'green' : 'orange'}}>{item.status}</p>
-                        <p className="cursor" onClick={() => toast.info('Chức năng xoá đang hoàn thiện')}>X</p>
+                        <p style={{ color: item.status === 'Available' ? 'green' : 'orange' }}>{item.status || 'Available'}</p>
+                        <p className="cursor" onClick={() => removeDriver(item._id)}>X</p>
                     </div>
                 ))}
             </div>

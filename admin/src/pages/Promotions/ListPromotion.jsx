@@ -19,6 +19,20 @@ const ListPromotion = ({ url }) => {
         }
     };
 
+    const removePromotion = async (promotionId) => {
+        try {
+            const response = await axios.post(`${url}/api/promotion/remove`, { id: promotionId });
+            if (response.data.success) {
+                toast.success(response.data.message);
+                await fetchList();
+            } else {
+                toast.error("Lỗi xóa mã");
+            }
+        } catch (error) {
+            toast.error("Không thể kết nối để xóa");
+        }
+    };
+
     useEffect(() => {
         fetchList();
     }, []);
@@ -42,7 +56,7 @@ const ListPromotion = ({ url }) => {
                         <p>{item.discountValue}</p>
                         <p>{item.minOrderValue}</p>
                         <p>{new Date(item.endDate).toLocaleDateString()}</p>
-                        <p className="cursor" onClick={() => toast.info('Chức năng xoá dang hoàn thiện')}>X</p>
+                        <p className="cursor" onClick={() => removePromotion(item._id)}>X</p>
                     </div>
                 ))}
             </div>

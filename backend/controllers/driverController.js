@@ -26,3 +26,23 @@ export const updateStatus = async (req, res) => {
         res.json({ success: false, message: "Lỗi khi cập nhật trạng thái" });
     }
 };
+
+export const getDrivers = async (req, res) => {
+    try {
+        const drivers = await driverModel.find({});
+        res.json({ success: true, data: drivers });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Lỗi khi tải danh sách tài xế" });
+    }
+};
+
+export const removeDriver = async (req, res) => {
+    try {
+        await driverModel.findByIdAndDelete(req.body.id);
+        res.json({ success: true, message: "Đã xóa tài xế thành công" });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Lỗi khi xóa tài xế" });
+    }
+};

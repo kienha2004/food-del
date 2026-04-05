@@ -28,3 +28,23 @@ export const validatePromotion = async (req, res) => {
         res.json({ success: false, message: "Lỗi khi xác thực mã khuyến mãi" });
     }
 };
+
+export const getPromotions = async (req, res) => {
+    try {
+        const promotions = await promotionModel.find({});
+        res.json({ success: true, data: promotions });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Lỗi kết nối khi lấy danh sách mã" });
+    }
+};
+
+export const removePromotion = async (req, res) => {
+    try {
+        await promotionModel.findByIdAndDelete(req.body.id);
+        res.json({ success: true, message: "Đã xóa mã khuyến mãi" });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Lỗi khi xóa mã" });
+    }
+};

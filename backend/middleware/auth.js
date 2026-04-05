@@ -24,9 +24,9 @@ const authMiddleware = async (req, res, next) => {
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    // Attach user info to req safely (do not write to req.body which can be undefined)
-    req.user = payload;
-    req.userId = payload.id || payload.userId || null;
+
+    req.body = req.body || {};
+    req.body.userId = payload.id || payload.userId || null;
     return next();
   } catch (err) {
     console.error("authMiddleware: JWT verify error:", err);

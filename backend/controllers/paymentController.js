@@ -28,3 +28,13 @@ export const getPaymentStatus = async (req, res) => {
         res.json({ success: false, message: "Lỗi khi lấy thông tin thanh toán" });
     }
 };
+
+export const getPayments = async (req, res) => {
+    try {
+        const payments = await paymentModel.find({});
+        res.json({ success: true, data: payments });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Lỗi khi tải danh sách thanh toán" });
+    }
+};
