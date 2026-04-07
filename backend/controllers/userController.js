@@ -1,4 +1,5 @@
 import userModel from "../models/userModel.js";
+import driverModel from "../models/driverModel.js";
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 import validator from "validator"
@@ -16,7 +17,13 @@ try{
 
     }
     const token = createToken(user._id);
-    res.json({success:true,token})
+
+    // Check if user is also a driver
+    const driver = await driverModel.findOne({ email });
+    const isDriver = !!driver;
+    const driverStatus = driver ? driver.status : null;
+
+    res.json({ success: true, token, isDriver, driverStatus });
 } catch (error){
 console.log(error);
 res.json({success:false,message:"error"})

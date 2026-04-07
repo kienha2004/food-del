@@ -8,6 +8,8 @@ const StoreContextProvider = (props) => {
   const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
   const [discountData, setDiscountData] = useState(null);
+  const [isDriver, setIsDriver] = useState(false);
+  const [driverStatus, setDriverStatus] = useState(null);
 
   const url = "http://localhost:4000";
 
@@ -133,6 +135,13 @@ const StoreContextProvider = (props) => {
       if (storedToken) {
         setToken(storedToken);
         await loadCartData(storedToken);
+        
+        const storedIsDriver = localStorage.getItem("isDriver");
+        const storedDriverStatus = localStorage.getItem("driverStatus");
+        if (storedIsDriver === "true") {
+          setIsDriver(true);
+          setDriverStatus(storedDriverStatus);
+        }
       }
     };
 
@@ -152,6 +161,10 @@ const StoreContextProvider = (props) => {
     discountData,
     applyPromotion,
     getDiscountAmount,
+    isDriver,
+    setIsDriver,
+    driverStatus,
+    setDriverStatus
   };
 
   return <StoreContext.Provider value={contextValue}>{props.children}</StoreContext.Provider>;

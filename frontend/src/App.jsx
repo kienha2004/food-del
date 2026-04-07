@@ -9,6 +9,7 @@ import LoginPopup from './components/LoginPopup/LoginPopup'
 import Verify from './pages/Verify/Verify'
 import MyOrders from './pages/MyOrders/MyOrders'
 import AddressBook from './pages/Profile/AddressBook'
+import DriverNotification from './components/DriverNotification/DriverNotification'
 
 const App = () => {
 
@@ -18,6 +19,7 @@ const[showLogin,setShowLogin]=useState(false)
     {showLogin?<LoginPopup setShowLogin={setShowLogin}/> :<></>}
        <div className='app'>
       <Navbar setShowLogin={setShowLogin} />
+      <DriverNotification />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/cart' element={<Cart />} />

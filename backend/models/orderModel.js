@@ -6,6 +6,8 @@ const orderSchema = new mongoose.Schema({
     amount:{type:Number,required:true},
     address:{type:Object,required:true},
     status:{type:String,default:"Food processing"},
+    driverId:{type:String,default:null},
+    driverName:{type:String,default:""},
     date:{type:Date,default:Date.now()},
     payment:{type:Boolean,default:false}
 }) 

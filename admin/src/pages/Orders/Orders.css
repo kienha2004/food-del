@@ -19,12 +19,44 @@
 .order-item-address{
     margin-bottom: 10px;
 }
+.order-actions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+}
+.driver-label, .status-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #888;
+    margin-bottom: -5px;
+}
 .order-item select {
-    background-color: #ffe8e4;
-    border: 1px solid tomato;
-    width:max(10vw,120px);
-    padding:10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    width: max(12vw, 150px);
+    padding: 8px;
+    border-radius: 4px;
     outline: none;
+    font-size: 13px;
+    cursor: pointer;
+}
+.order-item select:focus {
+    border-color: tomato;
+}
+.order-item-delete {
+    cursor: pointer;
+    background-color: #fff0f0;
+    color: #ff4747;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ffcccc;
+    transition: 0.2s;
+    font-size: 18px;
+}
+.order-item-delete:hover {
+    background-color: #ff4747;
+    color: white;
 }
 @media (max-width:1000px){
     .order-item{

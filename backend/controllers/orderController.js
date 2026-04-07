@@ -1,5 +1,6 @@
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
+import driverModel from "../models/driverModel.js";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -13,7 +14,7 @@ const placeOrder = async (req, res) => {
     const { items, amount, address } = req.body;
 
     if (!userId || !Array.isArray(items) || items.length === 0 || !amount) {
-      return res.status(400).json({ success: false, message: "Invalid payload" });
+      return res.status(400).json({ success: false, message: "Tải trọng không hợp lệ" });
     }
 
 
@@ -31,7 +32,7 @@ const placeOrder = async (req, res) => {
 
     const line_items = items.map((item) => ({
       price_data: {
-        currency: "inr",
+        currency: "usd",
         product_data: {
           name: item.name,
         },
@@ -43,7 +44,7 @@ const placeOrder = async (req, res) => {
 
     line_items.push({
       price_data: {
-        currency: "inr",
+        currency: "usd",
         product_data: {
           name: "Phí giao hàng",
         },
@@ -63,7 +64,7 @@ const placeOrder = async (req, res) => {
     return res.json({ success: true, session_url: session.url });
   } catch (error) {
     console.error("placeOrder error:", error);
-    return res.status(500).json({ success: false, message: "Internal server error" });
+    return res.status(500).json({ success: false, message: "Lỗi máy chủ nội bộ" });
   }
 };
 
@@ -96,14 +97,14 @@ const userOrders = async (req, res) => {
       (req.body && req.body.userId);
 
     if (!userId) {
-      return res.status(401).json({ success: false, message: "Unauthorized: missing user id" });
+      return res.status(401).json({ success: false, message: "Không được phép: thiếu id người dùng" });
     }
 
     const orders = await orderModel.find({ userId });
     return res.json({ success: true, data: orders });
   } catch (error) {
     console.error("userOrders error:", error);
-    return res.status(500).json({ success: false, message: "Internal server error" });
+    return res.status(500).json({ success: false, message: "Lỗi máy chủ nội bộ" });
   }
 };
 const listOrders = async (req, res) => {
@@ -119,12 +120,71 @@ const listOrders = async (req, res) => {
 }
 const updateStatus = async (req, res) => {
   try {
-    await orderModel.findByIdAndUpdate(req.body.orderId, { status: req.body.status });
-    res.json({ success: true, message: "Đã cập nhật trạng thái" })
+    const { orderId, status } = req.body;
+    const order = await orderModel.findById(orderId);
+    
+    await orderModel.findByIdAndUpdate(orderId, { status });
+
+    // If order is delivered, set driver status back to Available
+    if (status === "Delivered" && order.driverId) {
+      await driverModel.findByIdAndUpdate(order.driverId, { status: "Available" });
+    }
+
+    res.json({ success: true, message: "Đã cập nhật trạng thái" });
   } catch (error) {
     console.log(error);
-    res.json({ success: false, message: "error" })
+    res.json({ success: false, message: "error" });
   }
-}
+};
 
-export { placeOrder, verifyOrder, userOrders, listOrders, updateStatus };
+const assignDriver = async (req, res) => {
+  try {
+    const { orderId, driverId, driverName } = req.body;
+    
+    // Find the current order to see if it already has a driver
+    const currentOrder = await orderModel.findById(orderId);
+    if (currentOrder.driverId && currentOrder.driverId !== driverId) {
+      // Release the previous driver
+      await driverModel.findByIdAndUpdate(currentOrder.driverId, { status: "Available" });
+    }
+
+    await orderModel.findByIdAndUpdate(orderId, { driverId, driverName });
+    
+    // Mark the new driver as Busy
+    if (driverId) {
+      await driverModel.findByIdAndUpdate(driverId, { status: "Busy" });
+    }
+    
+    res.json({ success: true, message: "Đã phân công tài xế" });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Lỗi phân công tài xế" });
+  }
+};
+
+const removeOrder = async (req, res) => {
+  try {
+    await orderModel.findByIdAndDelete(req.body.orderId);
+    res.json({ success: true, message: "Đã xóa đơn hàng/giao dịch" });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Lỗi khi xóa" });
+  }
+};
+
+const updatePaymentStatus = async (req, res) => {
+  try {
+    const { orderId, payment, amount } = req.body;
+    const updateData = {};
+    if (payment !== undefined) updateData.payment = payment;
+    if (amount !== undefined) updateData.amount = amount;
+    
+    await orderModel.findByIdAndUpdate(orderId, updateData);
+    res.json({ success: true, message: "Đã cập nhật thông tin kế toán" });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Lỗi cập nhật" });
+  }
+};
+
+export { placeOrder, verifyOrder, userOrders, listOrders, updateStatus, removeOrder, updatePaymentStatus, assignDriver };

@@ -11,7 +11,6 @@ import orderRouter from "./routes/orderRoute.js";
 import addressRouter from "./routes/addressRoute.js";
 import reviewRouter from "./routes/reviewRoute.js";
 import driverRouter from "./routes/driverRoute.js";
-import paymentRouter from "./routes/paymentRoute.js";
 import promotionRouter from "./routes/promotionRoute.js";
 
 dotenv.config(); //Tải các biến môi trường
@@ -33,7 +32,6 @@ app.use("/api/order", orderRouter)
 app.use("/api/address", addressRouter);
 app.use("/api/review", reviewRouter);
 app.use("/api/driver", driverRouter);
-app.use("/api/payment", paymentRouter);
 app.use("/api/promotion", promotionRouter);
 app.get("/", (req, res) => {
     res.send("API Working");

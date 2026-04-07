@@ -1,0 +1,79 @@
+.driver-notification-banner {
+    position: fixed;
+    top: 70px; /* Below Navbar */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 128, 0, 0.1);
+    z-index: 999;
+    animation: slideDown 0.4s ease-out;
+}
+
+.driver-notification-banner.busy {
+    background-color: #fffbeb;
+    border-color: #fef3c7;
+    box-shadow: 0 4px 12px rgba(180, 83, 9, 0.1);
+}
+
+.banner-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.banner-content .icon {
+    font-size: 24px;
+}
+
+.banner-content p {
+    margin: 0;
+    color: #166534;
+    font-size: 14px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 11px;
+    margin-left: 4px;
+}
+
+.available .status-badge {
+    background-color: #22c55e;
+    color: white;
+}
+
+.busy .status-badge {
+    background-color: #f59e0b;
+    color: white;
+}
+
+.busy-note {
+    font-size: 12px;
+    color: #92400e;
+    margin-top: 6px;
+    font-style: italic;
+    border-top: 1px solid #fde68a;
+    padding-top: 4px;
+}
+
+@keyframes slideDown {
+    from { transform: translate(-50%, -100%); opacity: 0; }
+    to { transform: translate(-50%, 0); opacity: 1; }
+}
+
+@media (max-width: 750px) {
+    .driver-notification-banner {
+        top: 60px;
+        width: 95%;
+        padding: 10px;
+    }
+}

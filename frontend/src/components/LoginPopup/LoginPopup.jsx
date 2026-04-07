@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { StoreContext } from '../../context/StoreContext';
 import axios from "axios"
 const LoginPopup = ({ setShowLogin }) => {
-  const {url,setToken}= useContext(StoreContext)
+  const { url, setToken, setIsDriver, setDriverStatus } = useContext(StoreContext)
   const [currState, setCurrState] = useState("Login");
   
   const[data,setData] = useState({
@@ -31,6 +31,17 @@ const response = await axios.post(newUrl,data);
 if(response.data.success){
 setToken(response.data.token);
 localStorage.setItem("token",response.data.token);
+if (response.data.isDriver) {
+  setIsDriver(true);
+  setDriverStatus(response.data.driverStatus);
+  localStorage.setItem("isDriver", "true");
+  localStorage.setItem("driverStatus", response.data.driverStatus);
+} else {
+  setIsDriver(false);
+  setDriverStatus(null);
+  localStorage.removeItem("isDriver");
+  localStorage.removeItem("driverStatus");
+}
 setShowLogin(false)
 } else{
   alert(response.data.message)

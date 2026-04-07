@@ -67,12 +67,15 @@ const MyOrders = () => {
                   <b>{status === 'Out for delivery' ? 'Đang giao hàng' : status}</b>
                 </p>
 
-                {status === 'Out for delivery' && (
-                  <div className="driver-info" style={{marginTop: '10px', fontSize: '13px', color: '#555', backgroundColor: '#e8f5e9', padding: '10px', borderRadius: '5px', border: '1px solid #c8e6c9'}}>
-                    <b style={{color: '#2e7d32'}}>🛵 Nhận diện Shipper:</b><br/>
-                    <b>Tên:</b> Nguyễn Văn A <br/>
-                    <b>SĐT:</b> 0909123456 <br/>
-                    <b>Xe:</b> Honda Wave (59A1-12345)
+                {order.driverName && (
+                  <div className="driver-info" style={{marginTop: '10px', fontSize: '13px', color: '#555', backgroundColor: '#f0fdf4', padding: '12px', borderRadius: '8px', border: '1px solid #bbf7d0'}}>
+                    <b style={{color: '#16a34a', display: 'flex', alignItems: 'center', gap: '6px'}}>
+                      <span style={{fontSize: '18px'}}>🛵</span> Nhận diện Shipper:
+                    </b>
+                    <div style={{marginTop: '6px', lineHeight: '1.6'}}>
+                      <b>Tên:</b> {order.driverName} <br/>
+                      <span style={{color: '#666', fontSize: '12px'}}>Tài xế đang xử lý đơn hàng của bạn.</span>
+                    </div>
                   </div>
                 )}
 
